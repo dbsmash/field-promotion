@@ -2,10 +2,16 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('RecordController', [function() {
+var controllers = angular.module('myApp.controllers', []);
 
-  }])
-  .controller('SearchController', [function() {
+var RecordController = function($scope, GameService) {
+	GameService.getGames($scope);
+};
 
-  }]);
+controllers.controller('RecordController', RecordController);
+
+var SearchController = function() {
+
+};
+
+controllers.controller('SearchController', SearchController);
