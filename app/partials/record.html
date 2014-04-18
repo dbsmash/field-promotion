@@ -1,56 +1,47 @@
 <div class="record-area">
-  <table class="results-table">
-  <tr>
-    <td class="form-group">
+    <div class="form-group col-md-3">
       <label for="date">Date:</label>
       <input type="date" class="form-control" ng-model="date" value="{{ date | date: 'MM-dd-yyyy' }}"/>
-    </td>
+    </div>
 
-    <td class="form-group">
+    <div class="form-group col-md-3">
       <label for="opponent_name">Opponent Name: </label>
       <input class="form-control" type="text" ng-model="opponent_name"  size="30">
-    </td>
-  </tr>
-  <tr>
-    <td class="form-group">
-      <label for="player_faction">Player Faction:</label>
-      <select class="form-control " ng-model="player_faction" ng-options="faction.name for faction in playerFactions" ng-change="playerFactionChanged(player_faction)"></select>
-    </td>
+    </div>
 
-    <td class="form-group">
-      <label for="player_warcaster">Player Warcaster</label>
-      <select class="form-control" ng-model="player_warcaster" ng-options="caster for caster in playerCasters"></select>
-    </td>
-  </tr>
-  <tr>
-    <td class="form-group">
-      <label for="opponent_faction">Opponent Faction: </label>
-      <select class="form-control" ng-model="opponent_faction" ng-options="faction.name for faction in opponentFactions" ng-change="opponentFactionChanged(opponent_faction)"></select>
-    </td>
-
-    <td class="form-group">
-      <label for="opponent_warcaster">Opponent Warcaster: </label>
-      <select class="form-control" ng-model="opponent_warcaster" ng-options="caster for caster in opponentCasters"></select>
-    </td>
-  </tr>
-  <tr>
-    <td class="form-group">
+    <div class="form-group col-md-3">
       <label for="size">Point Level:</label>
       <input class="form-control" type="text" ng-model="size"  size="30">
-    </td>
+    </div>
 
-    <td class="form-group">
+    <div class="form-group col-md-3">
       <label for="result">Result:</label>
       <select class="form-control" ng-model="result" ng-options="result.name for result in results"></select>
-    </td>
-  </tr>
-  <tr>
-    <td>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="player_faction">Player Faction:</label>
+      <select class="form-control " ng-model="player_faction" ng-options="faction.name for faction in playerFactions" ng-change="playerFactionChanged(player_faction)"></select>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="player_warcaster">Player Warcaster</label>
+      <select class="form-control" ng-model="player_warcaster" ng-options="caster for caster in playerCasters"></select>
+    </div>
+    
+    <div class="form-group col-md-3">
+      <label for="opponent_faction">Opponent Faction: </label>
+      <select class="form-control" ng-model="opponent_faction" ng-options="faction.name for faction in opponentFactions" ng-change="opponentFactionChanged(opponent_faction)"></select>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label for="opponent_warcaster">Opponent Warcaster: </label>
+      <select class="form-control" ng-model="opponent_warcaster" ng-options="caster for caster in opponentCasters"></select>
+    </div>
+   
+    <div  class="form-group col-md-3">
       <button class="submit-button form-control btn btn-default" ng-click="submitGame()">Submit</button>
-    </td>
-  </tr>
-  <tr>
-</table>
+    </div>
 </div>
 
 <div class="game-history">
