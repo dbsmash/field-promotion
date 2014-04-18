@@ -1,4 +1,81 @@
-<p>This is the future home of the record partial.</p>
-<div ng-repeat="game in games">
-	{{game.date}}
+<div class="record-area">
+  <table class="results-table">
+  <tr>
+    <td class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" class="form-control" ng-model="date" value="{{ date | date: 'MM-dd-yyyy' }}"/>
+    </td>
+
+    <td class="form-group">
+      <label for="opponent_name">Opponent Name: </label>
+      <input class="form-control" type="text" ng-model="opponent_name"  size="30">
+    </td>
+  </tr>
+  <tr>
+    <td class="form-group">
+      <label for="player_faction">Player Faction:</label>
+      <select class="form-control " ng-model="player_faction" ng-options="faction.name for faction in playerFactions" ng-change="playerFactionChanged(player_faction)"></select>
+    </td>
+
+    <td class="form-group">
+      <label for="player_warcaster">Player Warcaster</label>
+      <select class="form-control" ng-model="player_warcaster" ng-options="caster for caster in playerCasters"></select>
+    </td>
+  </tr>
+  <tr>
+    <td class="form-group">
+      <label for="opponent_faction">Opponent Faction: </label>
+      <select class="form-control" ng-model="opponent_faction" ng-options="faction.name for faction in opponentFactions" ng-change="opponentFactionChanged(opponent_faction)"></select>
+    </td>
+
+    <td class="form-group">
+      <label for="opponent_warcaster">Opponent Warcaster: </label>
+      <select class="form-control" ng-model="opponent_warcaster" ng-options="caster for caster in opponentCasters"></select>
+    </td>
+  </tr>
+  <tr>
+    <td class="form-group">
+      <label for="size">Point Level:</label>
+      <input class="form-control" type="text" ng-model="size"  size="30">
+    </td>
+
+    <td class="form-group">
+      <label for="result">Result:</label>
+      <select class="form-control" ng-model="result" ng-options="result.name for result in results"></select>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <button class="submit-button form-control btn btn-default" ng-click="submitGame()">Submit</button>
+    </td>
+  </tr>
+  <tr>
+</table>
+</div>
+
+<div class="game-history">
+  <table class="table table-striped">
+    <tr>
+      <th>Date</th>
+      <th>Faction</th>
+      <th>Caster</th>
+      <th>Opponent</th>
+      <th>Opponent Faction</th>
+      <th>Opponent Caster</th>
+      <th>Point Level</th>
+      <th>Result</th>
+      <th>Manage</th>
+    </tr>
+    <tr ng-repeat="game in games">
+      <th>{{game.date}}</th>
+      <th>{{game.player_faction}}</th>
+      <th>{{game.player_warcaster}}</th>
+      <th>{{game.opponent_name}}</th>
+      <th>{{game.opponent_faction}}</th>
+      <th>{{game.opponent_warcaster}}</th>
+      <th>{{game.size}}</th>
+      <th>{{game.result}}</th>
+      <th><button ng-click="deleteGame(game)">Delete</button></th>
+    </tr>
+  </table>
 </div>

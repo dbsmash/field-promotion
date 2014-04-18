@@ -1,5 +1,5 @@
 application: field-promotion
-version: 4
+version: 5
 runtime: python27
 threadsafe: true
 api_version: 1
