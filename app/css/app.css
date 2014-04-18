@@ -28,3 +28,80 @@
   content: "";
   padding: 0;
 }
+
+h2{
+  margin-left: 50px;
+}
+
+.header {
+  position: relative;
+  left: 20px;
+}
+
+.faction-admin {
+  position: relative;
+  left: 20px;
+  width: 75%;
+}
+
+.Game-History-Title,
+.Record-Game-Title,
+.Result-Administration-Title{
+  text-align: center;
+}
+
+.result-admin {
+  position: relative;
+  left: 20px;
+  width: 50%;
+}
+
+.caster-admin {
+  position: relative;
+  left: 20px;
+  width: 75%;
+  height: 600px;
+  overflow: scroll;
+}
+
+
+.table-of-contents {
+  width: 30%;
+}
+
+.front-page-button {
+  width: 63px;
+}
+
+.btn-primary{
+  width: 100px;
+}
+
+.search-results {
+  border: 1px #C0C0C0 solid;
+  margin-left: 20px;
+  background-color: lightgray;
+  height: 100px;
+  width: 300px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.form-group {
+  width: 49%;
+}
+
+.form-group {
+  padding-left: 5px;
+}
+
+.results-table {
+  width: 50%;
+}
+
+.submit-button {
+  width: 80px !important;
+  margin-top: 5px !important;
+  margin-left: 5px !important;
+  margin-bottom: 5px !important;
+}
