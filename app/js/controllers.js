@@ -58,7 +58,7 @@ var RecordController = function($scope, GameService, FactionService) {
 			teaching: Boolean(results[2]),
 		};
 		GameService.submitGame(game);
-		$scope.games.push(game);
+		$scope.games.unshift(game);
 		resetValues();
 	};
 
