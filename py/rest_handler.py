@@ -15,7 +15,7 @@ class GameHandler(webapp2.RequestHandler):
         logging.warn(self.request)
     	game_list = []
     	namespace_manager.set_namespace(users.get_current_user().user_id())
-    	query = Game.query()
+    	query = Game.query().order(-Game.date)
 
         if self.request.get('player_faction'):
             query = query.filter(Game.player_faction == self.request.get('player_faction'))
@@ -35,7 +35,6 @@ class GameHandler(webapp2.RequestHandler):
         win_count = 0
         non_teaching_count = 0
 
-        query.order(-Game.date)
         games = query.fetch(1000)
 
     	for game in games:
@@ -63,7 +62,7 @@ class GameHandler(webapp2.RequestHandler):
             'win_count': win_count,
             'non_teaching_count': non_teaching_count
         }
-        
+
     	self.response.out.write(json.dumps(results))
 
     def post(self):
