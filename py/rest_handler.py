@@ -10,12 +10,39 @@ from google.appengine.api import namespace_manager
 class GameHandler(webapp2.RequestHandler):
     def get(self):
     	"""
-    	GET ALL games
+    	GET ALL games - and filters if there are search criteria
     	"""
+        logging.warn(self.request)
     	game_list = []
     	namespace_manager.set_namespace(users.get_current_user().user_id())
-    	games = Game.query().order(-Game.date).fetch(1000)
+    	query = Game.query()
+
+        if self.request.get('player_faction'):
+            query = query.filter(Game.player_faction == self.request.get('player_faction'))
+        if self.request.get('player_warcaster'):
+            query = query.filter(Game.player_warcaster == self.request.get('player_warcaster'))
+        if self.request.get('opponent_name'):
+           query = query.filter(Game.opponent_name == self.request.get('opponent_name'))
+        if self.request.get('opponent_faction'):
+            query = query.filter(Game.opponent_faction == self.request.get('opponent_faction'))
+        if self.request.get('opponent_warcaster'):
+            query = query.filter(Game.opponent_warcaster == self.request.get('opponent_warcaster'))
+        if self.request.get('size'):
+            query = query.filter(Game.size == self.request.get('size'))
+        if self.request.get('result'):
+            query = query.filter(Game.result == self.request.get('result'))
+
+        win_count = 0
+        non_teaching_count = 0
+
+        query.order(-Game.date)
+        games = query.fetch(1000)
+
     	for game in games:
+            if game.won:
+                win_count = win_count + 1
+            if not game.teaching and not game.draw:
+                non_teaching_count = non_teaching_count + 1
     		game_map = {}
     		game_map['player_faction'] = game.player_faction
 	    	game_map['player_warcaster'] = game.player_warcaster
@@ -30,7 +57,14 @@ class GameHandler(webapp2.RequestHandler):
 	    	game_map['date'] = str(game.date)
 	    	game_map['key'] = game.key.urlsafe()
     		game_list.append(game_map)
-    	self.response.out.write(json.dumps(game_list))
+
+        results = {
+            'games': game_list,
+            'win_count': win_count,
+            'non_teaching_count': non_teaching_count
+        }
+        
+    	self.response.out.write(json.dumps(results))
 
     def post(self):
     	"""

@@ -7,21 +7,27 @@ var controllers = angular.module('myApp.controllers', []);
 var RecordController = function($scope, GameService, FactionService) {
 	GameService.getGames($scope);
 	$scope.results = FactionService.getResults();
+	$scope.playerFactions = FactionService.getFactions();
+	$scope.opponentFactions = FactionService.getFactions();
 	resetValues();
 	
 	function resetValues() {
-		$scope.result = $scope.results[0];
+		var newGame = {
+			player_faction: $scope.playerFactions[0],
+			size: '',
+			opponent_name: '',
+			result: $scope.results[0],
+			opponent_faction: $scope.opponentFactions[0],
+			date: ''
+		};
 
-		$scope.playerFactions = FactionService.getFactions();
-		$scope.player_faction = $scope.playerFactions[0];
-		$scope.playerCasters = FactionService.getCastersForFaction($scope.player_faction);
-		$scope.player_warcaster = $scope.playerCasters[0];
-		$scope.opponent_name = '';
-		$scope.size = '';
-		$scope.opponentFactions = FactionService.getFactions();
-		$scope.opponent_faction = $scope.opponentFactions[0];
-		$scope.opponentCasters = FactionService.getCastersForFaction($scope.opponent_faction);
-		$scope.opponent_warcaster = $scope.opponentCasters[0];
+		$scope.playerCasters = FactionService.getCastersForFaction(newGame.player_faction);
+		newGame.player_warcaster = $scope.playerCasters[0];
+
+		$scope.opponentCasters = FactionService.getCastersForFaction(newGame.opponent_faction);
+		newGame.opponent_warcaster = $scope.opponentCasters[0];
+
+		$scope.newGame = newGame;
 	}
 
 	function getResultBooleans(result) {
@@ -34,25 +40,25 @@ var RecordController = function($scope, GameService, FactionService) {
 	
 	$scope.playerFactionChanged = function(faction) {
 		$scope.playerCasters = FactionService.getCastersForFaction(faction);
-		$scope.player_warcaster = $scope.playerCasters[0];
+		$scope.newGame.player_warcaster = $scope.playerCasters[0];
 	};
 
 	$scope.opponentFactionChanged = function(faction) {
 		$scope.opponentCasters = FactionService.getCastersForFaction(faction);
-		$scope.opponent_warcaster = $scope.opponentCasters[0];
+		$scope.newGame.opponent_warcaster = $scope.opponentCasters[0];
 	};
 
 	$scope.submitGame = function() {
-		var results = getResultBooleans($scope.result.name);
+		var results = getResultBooleans($scope.newGame.result.name);
 		var game = {
-			date: $scope.date,
-			player_faction: $scope.player_faction.name,
-			player_warcaster: $scope.player_warcaster,
-			opponent_name: $scope.opponent_name,
-			opponent_faction: $scope.opponent_faction.name,
-			opponent_warcaster: $scope.opponent_warcaster,
-			size: Number($scope.size),
-			result: $scope.result.name,
+			date: $scope.newGame.date,
+			player_faction: $scope.newGame.player_faction.name,
+			player_warcaster: $scope.newGame.player_warcaster,
+			opponent_name: $scope.newGame.opponent_name,
+			opponent_faction: $scope.newGame.opponent_faction.name,
+			opponent_warcaster: $scope.newGame.opponent_warcaster,
+			size: Number($scope.newGame.size),
+			result: $scope.newGame.result.name,
 			won: Boolean(results[0]),
 			draw: Boolean(results[1]),
 			teaching: Boolean(results[2]),
@@ -77,8 +83,48 @@ var RecordController = function($scope, GameService, FactionService) {
 	};
 };
 
-var SearchController = function() {
+var SearchController = function($scope, FactionService, GameService) {
+	$scope.results = FactionService.getResults();
+	$scope.playerFactions = FactionService.getFactions();
+	$scope.opponentFactions = FactionService.getFactions();
+	$scope.search = {};
+	$scope.performance = 'no search configured!';
 
+	$scope.clear = function() {
+		var search = {
+			player_faction: '',
+			size: '',
+			opponent_name: '',
+			result: '',
+			opponent_faction: '',
+			date: '',
+			player_warcaster: '',
+			opponent_warcaster: ''
+		};
+		$scope.playerCasters = [];
+		$scope.opponentCasters = [];
+		$scope.search = search;
+		$scope.games = [];
+		$scope.performance = 'no search configured!';
+	};
+
+	$scope.searchGames = function() {
+		$scope.performance = 'searching...';
+		GameService.searchGames($scope, $scope.search);
+	};
+
+	$scope.updatePerformance = function(wins, non_teaching_games) {
+		var win_per = Math.floor((wins / non_teaching_games) * 100);
+		$scope.performance = win_per + '% with ' + wins + ' wins over ' + non_teaching_games + ' games.';
+	};
+
+	$scope.playerFactionChanged = function(faction) {
+		$scope.playerCasters = FactionService.getCastersForFaction(faction);
+	};
+
+	$scope.opponentFactionChanged = function(faction) {
+		$scope.opponentCasters = FactionService.getCastersForFaction(faction);
+	};
 };
 
 controllers.controller('RecordController', RecordController);
