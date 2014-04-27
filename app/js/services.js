@@ -10,7 +10,7 @@ services.value('version', '0.1');
 var GameService = function($http) {
 	var getGames = function($scope) {
 		$http.get('/game/').success(function(data) {
-			$scope.games = data;
+			$scope.games = data.games;
         });
 	};
 
@@ -30,10 +30,33 @@ var GameService = function($http) {
 		});
 	};
 
+	var searchGames = function($scope, search) {
+		var searchParams = {};
+		if (search.player_faction) {
+			searchParams.player_faction = search.player_faction.name;
+		}
+		if (search.opponent_faction) {
+			searchParams.opponent_faction = search.opponent_faction.name;
+		}
+		if (search.result) {
+			searchParams.result = search.result.name;
+		}
+		searchParams.size = search.size;
+		searchParams.opponent_name = search.opponent_name;
+		searchParams.player_warcaster = search.player_warcaster;
+		searchParams.opponent_warcaster = search.opponent_warcaster;
+		
+		$http.get('/game/', {params: searchParams}).success(function(data) {
+			$scope.games = data.games;
+			$scope.updatePerformance(data.win_count, data.non_teaching_count);
+        });
+	};
+
 	return {
 		getGames: getGames,
 		submitGame: submitGame,
-		deleteGame: deleteGame
+		deleteGame: deleteGame,
+		searchGames: searchGames
     };
 };
 
