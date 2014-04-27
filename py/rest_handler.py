@@ -1,5 +1,6 @@
 import webapp2
 from models import Game
+from models import User
 from google.appengine.ext import ndb
 import logging
 import json
@@ -8,14 +9,21 @@ from google.appengine.api import users
 from google.appengine.api import namespace_manager
 
 class GameHandler(webapp2.RequestHandler):
+    def record_usage(self):
+        cu = users.get_current_user()
+        current_user = User.query().filter(User.user_id == cu.user_id()).get()
+        if not current_user:
+            user = User(user_id = cu.user_id(), name = cu.nickname(), email=cu.email())
+            user.put()
+
     def get(self):
     	"""
     	GET ALL games - and filters if there are search criteria
     	"""
-        logging.warn(self.request)
+        self.record_usage()
     	game_list = []
     	namespace_manager.set_namespace(users.get_current_user().user_id())
-    	query = Game.query().order(-Game.date)
+    	query = Game.query()
 
         if self.request.get('player_faction'):
             query = query.filter(Game.player_faction == self.request.get('player_faction'))
@@ -56,7 +64,7 @@ class GameHandler(webapp2.RequestHandler):
 	    	game_map['date'] = str(game.date)
 	    	game_map['key'] = game.key.urlsafe()
     		game_list.append(game_map)
-
+        game_list.sort(key=lambda game: game['date'], reverse=True)
         results = {
             'games': game_list,
             'win_count': win_count,
@@ -69,7 +77,7 @@ class GameHandler(webapp2.RequestHandler):
     	"""
     	CREATE a new Game entity 
     	"""
-        logging.error(self.request)
+        self.record_usage()
     	namespace_manager.set_namespace(users.get_current_user().user_id())
     	param_map = {}
     	param_map['player_faction'] = self.request.get('player_faction')
@@ -97,6 +105,7 @@ class GameHandler(webapp2.RequestHandler):
     	"""
     	UPDATE an existing Game entity
     	"""
+        self.record_usage()
     	namespace_manager.set_namespace(users.get_current_user().user_id())
     	key_str = self.request.get('key')
     	key = ndb.Key(urlsafe=key_str)
@@ -137,6 +146,7 @@ class GameHandler(webapp2.RequestHandler):
     	"""
     	DELETE an existing Game entity
     	"""
+        self.record_usage()
     	namespace_manager.set_namespace(users.get_current_user().user_id())
     	key_str = self.request.url
     	key_str = self.request.url[self.request.url.rfind('/')+1:]
