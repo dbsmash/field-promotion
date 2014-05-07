@@ -91,3 +91,11 @@ h2{
 .record-area {
   width: 100%;
 }
+
+.lost {
+  color: red;
+}
+
+.won {
+  color: green;
+}
