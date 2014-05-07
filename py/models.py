@@ -19,3 +19,5 @@ class User(ndb.Model):
 	email = ndb.StringProperty()
 	name = ndb.StringProperty()
 	user_id = ndb.StringProperty()
+	active = ndb.DateTimeProperty(auto_now=True)
+	premeium = ndb.BooleanProperty(default=False)

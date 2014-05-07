@@ -65,7 +65,7 @@
       <th>{{game.opponent_faction}}</th>
       <th>{{game.opponent_warcaster}}</th>
       <th>{{game.size}}</th>
-      <th>{{game.result}}</th>
+      <th ng-class="{lost: isResultLoss(game.result), won: isResultWin(game.result)}">{{game.result}}</th>
     </tr>
   </table>
 </div>

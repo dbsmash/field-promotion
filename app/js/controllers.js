@@ -18,7 +18,8 @@ var RecordController = function($scope, GameService, FactionService) {
 			opponent_name: '',
 			result: $scope.results[0],
 			opponent_faction: $scope.opponentFactions[0],
-			date: ''
+			date: '',
+			key: 'NEW'
 		};
 
 		$scope.playerCasters = FactionService.getCastersForFaction(newGame.player_faction);
@@ -37,6 +38,22 @@ var RecordController = function($scope, GameService, FactionService) {
 			}
 		}
 	}
+
+	$scope.isResultLoss = function(resultString) {
+		for(var i = 0; i < $scope.results.length; i ++) {
+			if ($scope.results[i].name === resultString) {
+				return !$scope.results[i].won && !$scope.results[i].draw && !$scope.results[i].teaching;
+			}
+		}
+	};
+
+	$scope.isResultWin = function(resultString) {
+		for(var i = 0; i < $scope.results.length; i ++) {
+			if ($scope.results[i].name === resultString) {
+				return $scope.results[i].won;
+			}
+		}
+	};
 	
 	$scope.playerFactionChanged = function(faction) {
 		$scope.playerCasters = FactionService.getCastersForFaction(faction);
@@ -111,6 +128,24 @@ var SearchController = function($scope, FactionService, GameService) {
 	$scope.searchGames = function() {
 		$scope.performance = 'searching...';
 		GameService.searchGames($scope, $scope.search);
+	};
+
+	$scope.isResultLoss = function(resultString) {
+		for(var i = 0; i < $scope.results.length; i ++) {
+			if ($scope.results[i].name === resultString) {
+				return !$scope.results[i].won && !$scope.results[i].draw && !$scope.results[i].teaching;
+			}
+		}
+		return false;
+	};
+
+	$scope.isResultWin = function(resultString) {
+		for(var i = 0; i < $scope.results.length; i ++) {
+			if ($scope.results[i].name === resultString) {
+				return $scope.results[i].won;
+			}
+		}
+		return false;
 	};
 
 	$scope.updatePerformance = function(wins, non_teaching_games) {
