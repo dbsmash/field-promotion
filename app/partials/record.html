@@ -26,7 +26,7 @@
 
     <div class="form-group col-md-3">
       <label for="player_warcaster">Player Warcaster</label>
-      <select class="form-control" ng-model="newGame.player_warcaster" ng-options="caster for caster in playerCasters"></select>
+      <select class="form-control" ng-model="newGame.player_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in playerCasters"></select>
     </div>
     
     <div class="form-group col-md-3">
@@ -36,7 +36,7 @@
 
     <div class="form-group col-md-3">
       <label for="opponent_warcaster">Opponent Warcaster: </label>
-      <select class="form-control" ng-model="newGame.opponent_warcaster" ng-options="caster for caster in opponentCasters"></select>
+      <select class="form-control" ng-model="newGame.opponent_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in opponentCasters"></select>
     </div>
    
     <div  class="form-group col-md-3">
