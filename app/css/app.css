@@ -40,6 +40,11 @@ h2{
   text-align: center;
 }
 
+.game-history {
+  float: left;
+  width: 100%;
+}
+
 .result-admin {
   position: relative;
   left: 20px;
