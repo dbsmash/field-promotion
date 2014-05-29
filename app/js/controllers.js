@@ -4,6 +4,12 @@
 
 var controllers = angular.module('myApp.controllers', []);
 
+var designationMap = {
+	1:'',
+	2:' *',
+	3:' **'
+};
+
 var RecordController = function($scope, GameService, FactionService) {
 	GameService.getGames($scope);
 	$scope.results = FactionService.getResults();
@@ -70,10 +76,10 @@ var RecordController = function($scope, GameService, FactionService) {
 		var game = {
 			date: $scope.newGame.date,
 			player_faction: $scope.newGame.player_faction.name,
-			player_warcaster: $scope.newGame.player_warcaster,
+			player_warcaster: $scope.newGame.player_warcaster.name,
 			opponent_name: $scope.newGame.opponent_name,
 			opponent_faction: $scope.newGame.opponent_faction.name,
-			opponent_warcaster: $scope.newGame.opponent_warcaster,
+			opponent_warcaster: $scope.newGame.opponent_warcaster.name,
 			size: Number($scope.newGame.size),
 			result: $scope.newGame.result.name,
 			won: Boolean(results[0]),
@@ -97,6 +103,10 @@ var RecordController = function($scope, GameService, FactionService) {
 			$scope.games.splice(index, 1);
 		}
 
+	};
+
+	$scope.getDesignationForLevel = function(level) {
+		return designationMap[level];
 	};
 };
 
@@ -159,6 +169,10 @@ var SearchController = function($scope, FactionService, GameService) {
 
 	$scope.opponentFactionChanged = function(faction) {
 		$scope.opponentCasters = FactionService.getCastersForFaction(faction);
+	};
+
+	$scope.getDesignationForLevel = function(level) {
+		return designationMap[level];
 	};
 };
 
