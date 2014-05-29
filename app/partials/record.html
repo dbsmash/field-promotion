@@ -47,26 +47,26 @@
 <div class="game-history">
   <table class="table table-striped">
     <tr>
-      <th>Date</th>
-      <th>Faction</th>
-      <th>Caster</th>
-      <th>Opponent</th>
-      <th>Opponent Faction</th>
-      <th>Opponent Caster</th>
-      <th>Point Level</th>
-      <th>Result</th>
-      <th>Manage</th>
+      <th class="text-header">Date</th>
+      <th class="text-header">Faction</th>
+      <th class="text-header">Caster</th>
+      <th class="text-header">Opponent</th>
+      <th class="text-header">Opponent Faction</th>
+      <th class="text-header">Opponent Caster</th>
+      <th class="text-header">Point Level</th>
+      <th class="text-header">Result</th>
+      <th class="text-header">Manage</th>
     </tr>
     <tr ng-repeat="game in games">
-      <th>{{game.date}}</th>
-      <th>{{game.player_faction}}</th>
-      <th>{{game.player_warcaster}}</th>
-      <th>{{game.opponent_name}}</th>
-      <th>{{game.opponent_faction}}</th>
-      <th>{{game.opponent_warcaster}}</th>
-      <th>{{game.size}}</th>
-      <th ng-class="{lost: isResultLoss(game.result), won: isResultWin(game.result)}">{{game.result}}</th>
-      <th ng-if="game.key !== NEW"><button ng-click="deleteGame(game)">Delete</button></th>
+      <th class="text-font">{{game.date}}</th>
+      <th class="text-font">{{game.player_faction}}</th>
+      <th class="text-font">{{game.player_warcaster}}</th>
+      <th class="text-font">{{game.opponent_name}}</th>
+      <th class="text-font">{{game.opponent_faction}}</th>
+      <th class="text-font">{{game.opponent_warcaster}}</th>
+      <th class="text-font">{{game.size}}</th>
+      <th class="text-font" ng-class="{lost: isResultLoss(game.result), won: isResultWin(game.result)}">{{game.result}}</th>
+      <th class="text-font" ng-if="game.key !== NEW"><button ng-click="deleteGame(game)">Delete</button></th>
     </tr>
   </table>
 </div>

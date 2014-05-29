@@ -104,3 +104,12 @@ h2{
 .won {
   color: green;
 }
+
+.text-font {
+  font: 13px sans-serif;
+  text-align: center;
+}
+
+.text-header {
+  text-align: center;
+}
