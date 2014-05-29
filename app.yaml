@@ -19,3 +19,6 @@ handlers:
   static_files: app\1
   upload: app
   login: required
+
+builtins:
+- remote_api: on
