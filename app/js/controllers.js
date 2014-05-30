@@ -10,6 +10,21 @@ var designationMap = {
 	3:' **'
 };
 
+var iconMap = {
+	"Khador":"img/khador.jpg",
+	"Cygnar":"img/cygnar.jpg",
+	"Protectorate of Menoth":"img/menoth.jpg",
+	"Retribution of Scyrah":"img/ret.jpg",
+	"Cryx":"img/cryx.jpg",
+	"Mercenaries":"img/mercs.jpg",
+	"Legion of Everblight":"img/legion.jpg",
+	"Skorne":"img/skorne.jpg",
+	"Circle Orboros":"img/circle.jpg",
+	"Trollbloods":"img/trolls.jpg",
+	"Convergence of Cyriss":"img/cyriss.jpg",
+	"Minions":"img/minions.jpg",
+};
+
 var RecordController = function($scope, GameService, FactionService) {
 	GameService.getGames($scope);
 	$scope.results = FactionService.getResults();
@@ -108,6 +123,10 @@ var RecordController = function($scope, GameService, FactionService) {
 	$scope.getDesignationForLevel = function(level) {
 		return designationMap[level];
 	};
+
+	$scope.getIconForFaction = function(faction) {
+		return iconMap[faction];
+	};
 };
 
 var SearchController = function($scope, FactionService, GameService) {
@@ -173,6 +192,10 @@ var SearchController = function($scope, FactionService, GameService) {
 
 	$scope.getDesignationForLevel = function(level) {
 		return designationMap[level];
+	};
+
+	$scope.getIconForFaction = function(faction) {
+		return iconMap[faction];
 	};
 };
 

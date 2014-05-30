@@ -1,5 +1,11 @@
 /* app css stylesheet */
 
+.ico {
+  height: 20px;
+  width: 20px;
+  margin-right: 2px;
+}
+
 .menu {
   margin-top: 5px;
   list-style: none;
@@ -107,9 +113,7 @@ h2{
 
 .text-font {
   font: 13px sans-serif;
-  text-align: center;
 }
 
 .text-header {
-  text-align: center;
 }

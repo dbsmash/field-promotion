@@ -59,10 +59,10 @@
     </tr>
     <tr ng-repeat="game in games">
       <th class="text-font">{{game.date}}</th>
-      <th class="text-font">{{game.player_faction}}</th>
+      <th class="text-font"><img class="ico" src="{{getIconForFaction(game.player_faction)}}">{{game.player_faction}}</th>
       <th class="text-font">{{game.player_warcaster}}</th>
       <th class="text-font">{{game.opponent_name}}</th>
-      <th class="text-font">{{game.opponent_faction}}</th>
+      <th class="text-font"><img class="ico" src="{{getIconForFaction(game.opponent_faction)}}">{{game.opponent_faction}}</th>
       <th class="text-font">{{game.opponent_warcaster}}</th>
       <th class="text-font">{{game.size}}</th>
       <th  class="text-font" ng-class="{lost: isResultLoss(game.result), won: isResultWin(game.result)}">{{game.result}}</th>
