@@ -1,5 +1,5 @@
 <div class="record-area">
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="date">Results:</label>
       <div>{{performance}}</div>
     </div>
@@ -9,7 +9,7 @@
       <input class="form-control" type="text" ng-model="search.opponent_name"  size="30">
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="size">Point Level:</label>
       <input class="form-control" type="text" ng-model="search.size"  size="30">
     </div>
@@ -19,7 +19,12 @@
       <select class="form-control" ng-model="search.result" ng-options="result.name for result in results"></select>
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
+      <label for="location">Location (opt): </label>
+      <input class="form-control" type="text" ng-model="search.location"  size="30">
+    </div>
+
+    <div class="form-group col-md-2">
       <label for="player_faction">Player Faction:</label>
       <select class="form-control " ng-model="search.player_faction" ng-options="faction.name for faction in playerFactions" ng-change="playerFactionChanged(search.player_faction)"></select>
     </div>
@@ -29,7 +34,7 @@
       <select class="form-control" ng-model="search.player_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in playerCasters"></select>
     </div>
     
-    <div class="form-group col-md-3">
+    <div class="form-group col-md-2">
       <label for="opponent_faction">Opponent Faction: </label>
       <select class="form-control" ng-model="search.opponent_faction" ng-options="faction.name for faction in opponentFactions" ng-change="opponentFactionChanged(search.opponent_faction)"></select>
     </div>
@@ -37,6 +42,11 @@
     <div class="form-group col-md-3">
       <label for="opponent_warcaster">Opponent Warcaster: </label>
       <select class="form-control" ng-model="search.opponent_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in opponentCasters"></select>
+    </div>
+
+    <div class="form-group col-md-2">
+      <label for="game_type">Game Type (opt):</label>
+      <select class="form-control" ng-model="search.game_type" ng-options="type for type in gameTypes"></select>
     </div>
    
     <div  class="form-group col-md-3">

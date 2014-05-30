@@ -30,6 +30,7 @@ var RecordController = function($scope, GameService, FactionService) {
 	$scope.results = FactionService.getResults();
 	$scope.playerFactions = FactionService.getFactions();
 	$scope.opponentFactions = FactionService.getFactions();
+	$scope.gameTypes = FactionService.getGameTypes();
 	resetValues();
 	
 	function resetValues() {
@@ -40,7 +41,9 @@ var RecordController = function($scope, GameService, FactionService) {
 			result: $scope.results[0],
 			opponent_faction: $scope.opponentFactions[0],
 			date: '',
-			key: 'NEW'
+			key: 'NEW',
+			game_type: '',
+			location: ''
 		};
 
 		$scope.playerCasters = FactionService.getCastersForFaction(newGame.player_faction);
@@ -95,6 +98,8 @@ var RecordController = function($scope, GameService, FactionService) {
 			opponent_name: $scope.newGame.opponent_name,
 			opponent_faction: $scope.newGame.opponent_faction.name,
 			opponent_warcaster: $scope.newGame.opponent_warcaster.name,
+			game_type: $scope.newGame.game_type,
+			location: $scope.newGame.location,
 			size: Number($scope.newGame.size),
 			result: $scope.newGame.result.name,
 			won: Boolean(results[0]),
@@ -133,6 +138,7 @@ var SearchController = function($scope, FactionService, GameService) {
 	$scope.results = FactionService.getResults();
 	$scope.playerFactions = FactionService.getFactions();
 	$scope.opponentFactions = FactionService.getFactions();
+	$scope.gameTypes = FactionService.getGameTypes();
 	$scope.search = {};
 	$scope.performance = 'no search configured!';
 
@@ -145,7 +151,9 @@ var SearchController = function($scope, FactionService, GameService) {
 			opponent_faction: '',
 			date: '',
 			player_warcaster: '',
-			opponent_warcaster: ''
+			opponent_warcaster: '',
+			location: '',
+			game_type: ''
 		};
 		$scope.playerCasters = [];
 		$scope.opponentCasters = [];

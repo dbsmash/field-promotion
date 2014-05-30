@@ -47,6 +47,8 @@ var GameService = function($http) {
 		if (search.opponent_warcaster) {
 			searchParams.opponent_warcaster = search.opponent_warcaster.name;
 		}
+		searchParams.game_type = search.game_type;
+		searchParams.location = search.location;
 		searchParams.size = search.size;
 		searchParams.opponent_name = search.opponent_name;
 		
@@ -77,10 +79,15 @@ var FactionService = function($http) {
 		return results;
 	};
 
+	var getGameTypes = function() {
+		return gameTypes;
+	};
+
 	return {
 		getFactions: getFactions,
 		getCastersForFaction: getCastersForFaction,
-		getResults: getResults
+		getResults: getResults,
+		getGameTypes: getGameTypes
     };
 };
 
@@ -100,6 +107,13 @@ var factions = [
 	{name: "Trollbloods", symbol: "TROLL"},
 	{name: "Convergence of Cyriss", symbol: "COC"},
 	{name: "Minions", symbol: "MIN"},
+];
+
+var gameTypes = [
+	'Casual',
+	'Tournament',
+	'Convention',
+	'Teaching'
 ];
 
 var factionData = {
