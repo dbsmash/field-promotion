@@ -41,6 +41,10 @@ class GameHandler(webapp2.RequestHandler):
             query = query.filter(Game.size == self.request.get('size'))
         if self.request.get('result'):
             query = query.filter(Game.result == self.request.get('result'))
+        if self.request.get('location'):
+            query = query.filter(Game.location == self.request.get('location'))
+        if self.request.get('game_type'):
+            query = query.filter(Game.game_type == self.request.get('game_type'))
 
         win_count = 0
         non_teaching_count = 0
@@ -92,6 +96,8 @@ class GameHandler(webapp2.RequestHandler):
         param_map['won'] = self.request.get('won') == 'true'
         param_map['draw'] = self.request.get('draw') == 'true'
         param_map['teaching'] = self.request.get('teaching') == 'true'
+        param_map['location'] = self.request.get('location', '')
+        param_map['game_type'] = self.request.get('game_type', '')
         date = self.request.get('date')
         try:
             real_date = datetime.strptime(date,'%m/%d/%Y')

@@ -13,6 +13,8 @@ class Game(ndb.Model):
 	won = ndb.BooleanProperty()
 	draw = ndb.BooleanProperty()
 	teaching = ndb.BooleanProperty()
+	location = ndb.StringProperty()
+	game_type = ndb.StringProperty()
 
 
 class User(ndb.Model):
