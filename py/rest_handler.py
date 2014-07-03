@@ -7,8 +7,35 @@ import json
 from datetime import datetime
 from google.appengine.api import users
 from google.appengine.api import namespace_manager
+from collections import defaultdict
+
+
+class StatsHandler(webapp2.RequestHandler):
+
+    def initialize_stats(self):
+        return {
+            'count': 0,
+            'wins': 0,
+            'win_per': 0.0
+        }
+
+    def get(self):
+        statMap = {}
+        game_list = []
+        namespace_manager.set_namespace(users.get_current_user().user_id())
+        query = Game.query()
+        games = query.fetch(1000)
+        for game in games:
+            faction = game.player_faction
+            if not faction in statMap:
+                statMap[faction] = self.initialize_stats()
+            statMap[game.player_faction]['count'] += 1
+
+        self.response.out.write(json.dumps(statMap))
+
 
 class GameHandler(webapp2.RequestHandler):
+
     def record_usage(self):
         cu = users.get_current_user()
         current_user = User.query().filter(User.user_id == cu.user_id()).get()
@@ -162,5 +189,6 @@ class GameHandler(webapp2.RequestHandler):
         key.delete()
 
 app = webapp2.WSGIApplication([
-    ('/game.*', GameHandler)
+    ('/game.*', GameHandler),
+    ('/stat.*', StatsHandler)
 ], debug=True)

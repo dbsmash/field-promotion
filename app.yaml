@@ -1,5 +1,5 @@
 application: field-promotion
-version: 8
+version: 9
 runtime: python27
 threadsafe: true
 api_version: 1
@@ -7,6 +7,10 @@ api_version: 1
 handlers:
 
 - url: /game.*
+  script: py.rest_handler.app
+  login: required
+
+- url: /stat.*
   script: py.rest_handler.app
   login: required
 
