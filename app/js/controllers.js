@@ -207,5 +207,38 @@ var SearchController = function($scope, FactionService, GameService) {
 	};
 };
 
+var AnalyzeController = function($scope, StatsService) {
+	var loadChart = function(response) {
+		var names = [];
+		var wins = [];
+		var key;
+
+		for (key in response) {
+			if (response.hasOwnProperty(key)) {
+				names.push(key);
+				wins.push(response[key].count);
+			}
+		}
+		var data = {
+			labels: names,
+			datasets: [
+				{
+					label: "Factions!",
+					fillColor: "rgba(151,187,205,0.5)",
+					strokeColor: "rgba(151,187,205,0.8)",
+					highlightFill: "rgba(151,187,205,0.75)",
+					highlightStroke: "rgba(151,187,205,1)",
+					data: wins
+				}
+			]
+		};
+		var ctx = document.getElementById("myChart").getContext("2d");
+		var myBarChart = new Chart(ctx).Bar(data);
+	};
+	var data = StatsService.getStats($scope, loadChart);
+	
+};
+
 controllers.controller('RecordController', RecordController);
 controllers.controller('SearchController', SearchController);
+controllers.controller('AnalyzeController', AnalyzeController);

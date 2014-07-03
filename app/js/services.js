@@ -6,6 +6,17 @@ var services = angular.module('myApp.services', []);
 
 services.value('version', '0.1');
 
+var StatsService = function($http) {
+	var getStats = function($scope, callback) {
+		$http.get('/stat/').success(function(data) {
+			callback(data);
+        });
+	};
+
+	return {
+		getStats: getStats
+    };
+};
 
 var GameService = function($http) {
 	var getGames = function($scope) {
@@ -93,6 +104,7 @@ var FactionService = function($http) {
 
 services.service('GameService', GameService);
 services.service('FactionService', FactionService);
+services.service('StatsService', StatsService);
 
 var factions = [
 	{name: "Khador", symbol: "KH"},
@@ -308,6 +320,14 @@ var results = [{"name":"Assassination Victory",
   "teaching":false,
   "draw":false},
   {"name":"Clock Defeat",
+  "won":false,
+  "teaching":false,
+  "draw":false},
+  {"name":"Concession Victory",
+  "won":true,
+  "teaching":false,
+  "draw":false},
+  {"name":"Concession Defeat",
   "won":false,
   "teaching":false,
   "draw":false},
