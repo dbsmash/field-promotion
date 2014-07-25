@@ -234,6 +234,46 @@ var AnalyzeController = function($scope, StatsService) {
 		};
 		var ctx = document.getElementById("myChart").getContext("2d");
 		var myBarChart = new Chart(ctx).Bar(data);
+
+		//
+		var dataz = [
+			{
+				value: 89,
+				color:"#F7464A",
+				highlight: "#FF5A5E",
+				label: "Khador"
+			},
+			{
+				value: 50,
+				color: "#46BFBD",
+				highlight: "#5AD3D1",
+				label: "Retribution"
+			},
+			{
+				value: 67,
+				color: "#FDB45C",
+				highlight: "#FFC870",
+				label: "Protectorate"
+			},
+			{
+				value: 40,
+				color: "#949FB1",
+				highlight: "#A8B3C5",
+				label: "Cryx"
+			}
+
+		];
+
+		var options = {
+			scaleOverride: true,
+			scaleSteps: 10,
+			scaleStepWidth: 10,
+			scaleStartValue: 0,
+		};
+		
+		var ctx2 = document.getElementById("myChart2").getContext("2d");
+		var myBarChart2 = new Chart(ctx2).PolarArea(dataz, options);
+		//
 	};
 	var data = StatsService.getStats($scope, loadChart);
 	

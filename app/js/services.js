@@ -268,6 +268,7 @@ var factionData = {
 	],
 	"Trollbloods":[
 			{name:"Borka Kegslayer", level: 1},
+			{name:"Borka, Vengeance of the Rimeshaws", level: 2},
 			{name:"Calandra Truthsayer, Oracle of the Glimmerwood", level: 1},
 			{name:"Grim Angus", level: 1},
 			{name:"Hunters Grim", level: 1},
