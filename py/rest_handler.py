@@ -15,24 +15,28 @@ class StatsHandler(webapp2.RequestHandler):
     def initialize_stats(self):
         return {
             'count': 0,
+            'nt_count': 0,
             'wins': 0,
             'win_per': 0.0
         }
 
     def get(self):
-        self.response.out.write('{"Retribution of Scyrah": {"count": 24, "wins": 0, "win_per": 76.0}, "Cryx": {"count": 59, "wins": 0, "win_per": 56.7}, "Khador": {"count": 3, "wins": 0, "win_per": 100.0}, "Skorne": {"count": 5, "wins": 0, "win_per": 45.0}, "Mercenaries": {"count": 34, "wins": 0, "win_per": 33.0}, "Protectorate of Menoth": {"count": 56, "wins": 0, "win_per": 89.0}}')
-        #statMap = {}
-        #game_list = []
-        #namespace_manager.set_namespace(users.get_current_user().user_id())
-        #query = Game.query()
-        #games = query.fetch(1000)
-        #for game in games:
-        #    faction = game.player_faction
-        #    if not faction in statMap:
-        #        statMap[faction] = self.initialize_stats()
-        #    statMap[game.player_faction]['count'] += 1
+        statMap = {}
+        game_list = []
+        namespace_manager.set_namespace(users.get_current_user().user_id())
+        query = Game.query()
+        games = query.fetch(1000)
+        for game in games:
+            faction = game.player_faction
+            if not faction in statMap:
+                statMap[faction] = self.initialize_stats()
+            statMap[game.player_faction]['count'] += 1
+            if game.won:
+                statMap[game.player_faction]['wins'] += 1
+            if not game.teaching and not game.draw:
+                statMap[game.player_faction]['nt_count'] += 1
 
-        #self.response.out.write(json.dumps(statMap))
+        self.response.out.write(json.dumps(statMap))
 
 
 class GameHandler(webapp2.RequestHandler):
