@@ -8,19 +8,26 @@ from datetime import datetime
 from google.appengine.api import users
 from google.appengine.api import namespace_manager
 from collections import defaultdict
-
+import math
+import datetime
 
 class StatsHandler(webapp2.RequestHandler):
+    def how_many_months_ago(self, date1, date2):
+        delta = abs(date1 - date2)
+        months = int(math.ceil(delta.days / 30))
+        return months
 
     def initialize_stats(self):
         return {
             'count': 0,
             'nt_count': 0,
             'wins': 0,
-            'win_per': 0.0
+            'win_per': 0.0,
+            'history':[0,0,0,0,0,0,0,0,0,0,0,0]
         }
 
     def get(self):
+        today = datetime.date.today()
         statMap = {}
         game_list = []
         namespace_manager.set_namespace(users.get_current_user().user_id())
@@ -35,6 +42,11 @@ class StatsHandler(webapp2.RequestHandler):
                 statMap[game.player_faction]['wins'] += 1
             if not game.teaching and not game.draw:
                 statMap[game.player_faction]['nt_count'] += 1
+
+            months_ago = self.how_many_months_ago(game.date, today)
+            if months_ago < 12:
+                statMap[game.player_faction]['history'][months_ago] +=1
+
 
         self.response.out.write(json.dumps(statMap))
 
