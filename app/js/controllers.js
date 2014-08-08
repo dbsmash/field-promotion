@@ -26,12 +26,21 @@ var iconMap = {
 };
 
 var RecordController = function($scope, GameService, FactionService) {
+	var self = this;
 	GameService.getGames($scope);
 	$scope.results = FactionService.getResults();
 	$scope.playerFactions = FactionService.getFactions();
 	$scope.opponentFactions = FactionService.getFactions();
 	$scope.gameTypes = FactionService.getGameTypes();
 	resetValues();
+	$("#record-date").datepicker({
+		dateFormat:'yy-mm-dd',
+        onSelect:function (date) {
+            $scope.$apply(function () {
+                $scope.newGame.date = date;
+            });
+        }
+	});
 	
 	function resetValues() {
 		var newGame = {
@@ -208,7 +217,7 @@ var SearchController = function($scope, FactionService, GameService) {
 };
 
 var AnalyzeController = function($scope, StatsService) {
-	var loadChart = function(response) {
+	var loadFactionNumberChart = function(response) {
 		var names = [];
 		var wins = [];
 		var key;
@@ -235,7 +244,40 @@ var AnalyzeController = function($scope, StatsService) {
 		var ctx = document.getElementById("myChart").getContext("2d");
 		var myBarChart = new Chart(ctx).Bar(data);
 	};
-	var data = StatsService.getStats($scope, loadChart);
+
+	var loadFactionWinChart = function(response) {
+		var data = [];
+		var key;
+
+		for (key in response) {
+			if (response.hasOwnProperty(key)) {
+				var win_per = parseFloat(response[key].wins / response[key].nt_count * 100).toFixed(2);
+				data.push({
+					label: key,
+					value: win_per,
+					color: StatsService.getColorForFaction(key),
+					highlight: StatsService.getColorForFaction(key)
+				});
+			}
+		}
+
+		var options = {
+			scaleOverride: true,
+			scaleSteps: 10,
+			scaleStepWidth: 10,
+			scaleStartValue: 0,
+		};
+		
+		var ctx = document.getElementById("myChart2").getContext("2d");
+		var myBarChart = new Chart(ctx).PolarArea(data, options);
+	};
+
+	var loadCharts = function(response) {
+		loadFactionNumberChart(response);
+		loadFactionWinChart(response);
+	}
+
+	var data = StatsService.getStats($scope, loadCharts);
 	
 };
 

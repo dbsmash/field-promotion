@@ -123,5 +123,11 @@ h2{
   font: 13px sans-serif;
 }
 
-.text-header {
+.win-stats {
+  float: left;
+}
+
+.win-per {
+  float: left;
+  padding-left: 100px;
 }
