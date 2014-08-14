@@ -144,9 +144,9 @@ class GameHandler(webapp2.RequestHandler):
         param_map['game_type'] = self.request.get('game_type', '')
         date = self.request.get('date')
         try:
-            real_date = datetime.strptime(date,'%m/%d/%Y')
+            real_date = datetime.datetime.strptime(date,'%m/%d/%Y')
         except (ValueError):
-            real_date = datetime.strptime(date,'%Y-%m-%d')
+            real_date = datetime.datetime.strptime(date,'%Y-%m-%d')
         param_map['date'] = real_date
         logging.error(param_map)
         game = Game(**param_map)
@@ -188,9 +188,9 @@ class GameHandler(webapp2.RequestHandler):
         if self.request.get('date'):
             date = self.request.get('date')
             try:
-                real_date = datetime.strptime(date,'%m/%d/%Y')
+                real_date = datetime.datetime.strptime(date,'%m/%d/%Y')
             except (ValueError):
-                real_date = datetime.strptime(date,'%Y-%m-%d')
+                real_date = datetime.datetime.strptime(date,'%Y-%m-%d')
             game.date = real_date
         game.put()
 
