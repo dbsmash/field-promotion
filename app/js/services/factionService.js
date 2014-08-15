@@ -20,7 +20,8 @@ var FactionService = function($http) {
 		'Casual',
 		'Tournament',
 		'Convention',
-		'Teaching'
+		'Teaching',
+		'League'
 	];
 
 	var factionData = {
