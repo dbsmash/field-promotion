@@ -1,5 +1,5 @@
 var FactionService = function($http) {
-	
+
 	var factions = [
 		{name: "Khador", symbol: "KH"},
 		{name: "Cygnar", symbol: "CYG"},
@@ -122,6 +122,7 @@ var FactionService = function($http) {
 		],
 		"Legion of Everblight": [
 				{name:"Absylonia, Terror of Everblight", level: 1},
+				{name:"Absylonia, Daughter of Everblight", level: 2},
 				{name:"Bethayne, Voice of Everblight & Belphagor", level: 1},
 				{name:"Kallus, Wrath of Everblight", level: 1},
 				{name:"Lylyth, Herald of Everblight", level: 1},
@@ -146,11 +147,13 @@ var FactionService = function($http) {
 				{name:"Master Ascetic Naaresh", level: 1},
 				{name:"Dominar Rasheth", level: 1},
 				{name:"Tyrant Xerxis", level: 1},
+				{name:"Xerxis, Fury of Halaak", level: 2},
 				{name:"Supreme Aptimus Zaal & Kovaas", level: 1}
 		],
 		"Circle Orboros": [
 				{name:"Baldur the Stonecleaver", level: 1},
 				{name:"Baldur the Stonesoul", level: 2},
+				{name:"Bradigus Throle the Runecarver", level: 1},
 				{name:"Cassius the Oathkeeper", level: 1},
 				{name:"Grayle the Farstrider", level: 1},
 				{name:"Kaya the Wildborne", level: 1},
@@ -188,6 +191,8 @@ var FactionService = function($http) {
 				{name:"Bloody Barnabas", level: 1},
 				{name:"Calaban the Gravewalker", level: 1},
 				{name:"Dr. Arkadius", level: 1},
+				{name:"Helga the Conqueror", level: 1},
+				{name:"Jaga-Jaga, the Death Charmer", level: 1},
 				{name:"Lord Carver, BMMD, Esq. III", level: 1},
 				{name:"Maelok the Dreadbound", level: 1},
 				{name:"Midas", level: 1},
