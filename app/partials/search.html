@@ -1,55 +1,55 @@
 <div class="record-area">
     <div class="form-group col-md-2">
-      <label for="date">Results:</label>
+      <label>Results:</label>
       <div>{{performance}}</div>
     </div>
 
     <div class="form-group col-md-3">
-      <label for="opponent_name">Opponent Name: </label>
-      <input class="form-control" type="text" ng-model="search.opponent_name"  size="30">
+      <label for="opponent-name">Opponent Name:</label>
+      <input id="opponent-name" class="form-control" type="text" ng-model="search.opponent_name"  size="30">
     </div>
 
     <div class="form-group col-md-2">
       <label for="size">Point Level:</label>
-      <input class="form-control" type="text" ng-model="search.size"  size="30">
+      <input id="size" class="form-control" type="text" ng-model="search.size"  size="30">
     </div>
 
     <div class="form-group col-md-3">
       <label for="result">Result:</label>
-      <select class="form-control" ng-model="search.result" ng-options="result.name for result in results"></select>
+      <select id="result" class="form-control" ng-model="search.result" ng-options="result.name for result in results"></select>
     </div>
 
     <div class="form-group col-md-2">
-      <label for="location">Location (opt): </label>
-      <input class="form-control" type="text" ng-model="search.location"  size="30">
+      <label for="location">Location (opt):</label>
+      <input id="location" class="form-control" type="text" ng-model="search.location"  size="30">
     </div>
 
     <div class="form-group col-md-2">
-      <label for="player_faction">Player Faction:</label>
-      <select class="form-control " ng-model="search.player_faction" ng-options="faction.name for faction in playerFactions" ng-change="playerFactionChanged(search.player_faction)"></select>
+      <label for="player-faction">Player Faction:</label>
+      <select id="player-faction" class="form-control " ng-model="search.player_faction" ng-options="faction.name for faction in playerFactions" ng-change="playerFactionChanged(search.player_faction)"></select>
     </div>
 
     <div class="form-group col-md-3">
-      <label for="player_warcaster">Player Warcaster</label>
-      <select class="form-control" ng-model="search.player_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in playerCasters"></select>
+      <label for="player-warcaster">Player Warcaster:</label>
+      <select id="player-warcaster" class="form-control" ng-model="search.player_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in playerCasters"></select>
     </div>
-    
+
     <div class="form-group col-md-2">
-      <label for="opponent_faction">Opponent Faction: </label>
-      <select class="form-control" ng-model="search.opponent_faction" ng-options="faction.name for faction in opponentFactions" ng-change="opponentFactionChanged(search.opponent_faction)"></select>
+      <label for="opponent-faction">Opponent Faction:</label>
+      <select id="opponent-faction" class="form-control" ng-model="search.opponent_faction" ng-options="faction.name for faction in opponentFactions" ng-change="opponentFactionChanged(search.opponent_faction)"></select>
     </div>
 
     <div class="form-group col-md-3">
-      <label for="opponent_warcaster">Opponent Warcaster: </label>
-      <select class="form-control" ng-model="search.opponent_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in opponentCasters"></select>
+      <label for="opponent-warcaster">Opponent Warcaster:</label>
+      <select id="opponent-warcaster" class="form-control" ng-model="search.opponent_warcaster" ng-options="caster.name+getDesignationForLevel(caster.level) for caster in opponentCasters"></select>
     </div>
 
     <div class="form-group col-md-2">
-      <label for="game_type">Game Type (opt):</label>
-      <select class="form-control" ng-model="search.game_type" ng-options="type for type in gameTypes"></select>
+      <label for="game-type">Game Type (opt):</label>
+      <select id="game-type" class="form-control" ng-model="search.game_type" ng-options="type for type in gameTypes"></select>
     </div>
-   
-    <div  class="form-group col-md-3">
+
+    <div class="form-group col-md-3">
       <button class="submit-button form-control btn btn-default" ng-click="searchGames()">Search</button>
       <button class="submit-button form-control btn btn-default" ng-click="clear()">Clear</button>
     </div>
