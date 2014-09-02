@@ -66,6 +66,10 @@ var RecordController = function($scope, GameService, FactionService) {
 		}
 	}
 
+	function sortGames(games) {
+		return games.sort(function(a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0 });
+	}
+
 	$scope.isResultLoss = function(resultString) {
 		for(var i = 0; i < $scope.results.length; i ++) {
 			if ($scope.results[i].name === resultString) {
@@ -110,7 +114,8 @@ var RecordController = function($scope, GameService, FactionService) {
 			teaching: Boolean(results[2]),
 		};
 		GameService.submitGame(game);
-		$scope.games.unshift(game);
+		$scope.games.push(game);
+		$scope.games = sortGames($scope.games);
 		resetValues();
 	};
 
