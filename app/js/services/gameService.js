@@ -11,7 +11,7 @@ var GameService = function($http) {
 			url: '/game/',
 			data: $.param(gameParams),
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-		});
+		}).success(function(key) { gameParams.key = key });
 	};
 
 	var deleteGame = function(game) {
