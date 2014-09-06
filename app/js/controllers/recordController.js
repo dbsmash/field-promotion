@@ -1,6 +1,19 @@
 var RecordController = function($scope, GameService, FactionService) {
 	var self = this;
-	GameService.getGames($scope);
+	GameService.getGames($scope).then(function() {
+		var mostRecentGame = $scope.games.slice().sort(function(a, b) { return a.created_at - b.created_at || new Date(a.date) - new Date(b.date) })[0];
+		if(mostRecentGame) {
+			$scope.newGame.player_faction   = FactionService.getFactions().filter(function(f) { return f.name == mostRecentGame.player_faction })[0];
+			$scope.newGame.player_warcaster = FactionService.getCastersForFaction($scope.newGame.player_faction).filter(function(f) {
+				return f.name == mostRecentGame.player_warcaster
+			})[0];
+			$scope.newGame.size             = mostRecentGame.size;
+			$scope.newGame.date             = mostRecentGame.date;
+			$scope.newGame.game_type        = mostRecentGame.game_type;
+			$scope.newGame.location         = mostRecentGame.location;
+		}
+		resetValues();
+	});
 	$scope.results = FactionService.getResults();
 	$scope.playerFactions = FactionService.getFactions();
 	$scope.opponentFactions = FactionService.getFactions();

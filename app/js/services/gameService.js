@@ -1,7 +1,8 @@
 var GameService = function($http) {
 	var getGames = function($scope) {
-		$http.get('/game/').success(function(data) {
+		return $http.get('/game/').success(function(data) {
 			$scope.games = data.games;
+			$scope.games.created_at = $scope.games.created_at && new Date($scope.games.created_at)
         });
 	};
 
