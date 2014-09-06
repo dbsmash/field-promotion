@@ -37,25 +37,25 @@ var RecordController = function($scope, GameService, FactionService) {
 	};
 	
 	function resetValues() {
-		var newGame = {
+		$scope.newGame = $scope.newGame || {
 			player_faction: $scope.playerFactions[0],
 			size: '',
-			opponent_name: '',
-			result: $scope.results[0],
-			opponent_faction: $scope.opponentFactions[0],
-			date: '',
-			key: 'NEW',
+			date: new Date().toISOString().split('T')[0],
 			game_type: '',
 			location: ''
 		};
 
-		$scope.playerCasters = FactionService.getCastersForFaction(newGame.player_faction);
-		newGame.player_warcaster = $scope.playerCasters[0];
+		$scope.newGame.opponent_name = '';
+		$scope.newGame.result = $scope.results[0];
+		$scope.newGame.opponent_faction = $scope.playerFactions[0];
+		$scope.newGame.key = 'NEW';
 
-		$scope.opponentCasters = FactionService.getCastersForFaction(newGame.opponent_faction);
-		newGame.opponent_warcaster = $scope.opponentCasters[0];
+		$scope.playerCasters = FactionService.getCastersForFaction($scope.newGame.player_faction);
+		if($scope.playerCasters.indexOf($scope.newGame.player_warcaster) == -1)
+			$scope.newGame.player_warcaster = $scope.playerCasters[0];
 
-		$scope.newGame = newGame;
+		$scope.opponentCasters = FactionService.getCastersForFaction($scope.newGame.opponent_faction);
+		$scope.newGame.opponent_warcaster = $scope.opponentCasters[0];
 	}
 
 	function getResultBooleans(result) {
