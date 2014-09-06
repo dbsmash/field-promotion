@@ -102,7 +102,7 @@ class GameHandler(webapp2.RequestHandler):
                 non_teaching_count = non_teaching_count + 1
             game_map = {}
             for attr in ['player_faction', 'player_warcaster', 'opponent_name', 'opponent_faction',
-                         'opponent_warcaster', 'result', 'size', 'won', 'draw', 'teaching']:
+                         'opponent_warcaster', 'result', 'size', 'won', 'draw', 'teaching', 'location', 'game_type']:
                 game_map[attr] = getattr(game, attr)
             game_map['date'] = game.date.isoformat()
             if game.created_at is not None:
