@@ -3,6 +3,7 @@ from google.appengine.api import memcache
 
 class Game(ndb.Model):
 	date = ndb.DateProperty(required=True)
+	created_at = ndb.DateTimeProperty()
 	player_faction = ndb.StringProperty(required=True)
 	player_warcaster = ndb.StringProperty(required=True)
 	opponent_name = ndb.StringProperty()
