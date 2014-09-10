@@ -8,11 +8,11 @@ var RecordController = function($scope, GameService, FactionService) {
 	resetValues();
 	$("#record-date").datepicker({
 		dateFormat:'yy-mm-dd',
-        onSelect:function (date) {
-            $scope.$apply(function () {
-                $scope.newGame.date = date;
-            });
-        }
+		onSelect:function (date) {
+			$scope.$apply(function () {
+				$scope.newGame.date = date;
+			});
+		}
 	});
 
 	var designationMap = {
@@ -35,7 +35,7 @@ var RecordController = function($scope, GameService, FactionService) {
 		"Convergence of Cyriss":"img/cyriss.jpg",
 		"Minions":"img/minions.jpg",
 	};
-	
+
 	function resetValues() {
 		var newGame = {
 			player_faction: $scope.playerFactions[0],
@@ -60,10 +60,14 @@ var RecordController = function($scope, GameService, FactionService) {
 
 	function getResultBooleans(result) {
 		for(var i = 0; i < $scope.results.length; i++) {
-		    if ($scope.results[i].name === result) {
+			if ($scope.results[i].name === result) {
 				return [$scope.results[i].won, $scope.results[i].draw, $scope.results[i].teaching];
 			}
 		}
+	}
+
+	function sortGames(games) {
+		return games.sort(function(a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0 });
 	}
 
 	$scope.isResultLoss = function(resultString) {
@@ -81,7 +85,7 @@ var RecordController = function($scope, GameService, FactionService) {
 			}
 		}
 	};
-	
+
 	$scope.playerFactionChanged = function(faction) {
 		$scope.playerCasters = FactionService.getCastersForFaction(faction);
 		$scope.newGame.player_warcaster = $scope.playerCasters[0];
@@ -110,7 +114,8 @@ var RecordController = function($scope, GameService, FactionService) {
 			teaching: Boolean(results[2]),
 		};
 		GameService.submitGame(game);
-		$scope.games.unshift(game);
+		$scope.games.push(game);
+		$scope.games = sortGames($scope.games);
 		resetValues();
 	};
 
