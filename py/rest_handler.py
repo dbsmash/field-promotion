@@ -101,17 +101,12 @@ class GameHandler(webapp2.RequestHandler):
             if not game.teaching and not game.draw:
                 non_teaching_count = non_teaching_count + 1
             game_map = {}
-            game_map['player_faction'] = game.player_faction
-            game_map['player_warcaster'] = game.player_warcaster
-            game_map['opponent_name'] = game.opponent_name
-            game_map['opponent_faction'] = game.opponent_faction
-            game_map['opponent_warcaster'] = game.opponent_warcaster
-            game_map['result'] = game.result
-            game_map['size'] = game.size
-            game_map['won'] = game.won
-            game_map['draw'] = game.draw
-            game_map['teaching'] = game.teaching
-            game_map['date'] = str(game.date)
+            for attr in ['player_faction', 'player_warcaster', 'opponent_name', 'opponent_faction',
+                         'opponent_warcaster', 'result', 'size', 'won', 'draw', 'teaching', 'location', 'game_type']:
+                game_map[attr] = getattr(game, attr)
+            game_map['date'] = game.date.isoformat()
+            if game.created_at is not None:
+                game_map['created_at'] = game.created_at.isoformat()
             game_map['key'] = game.key.urlsafe()
             game_list.append(game_map)
         game_list.sort(key=lambda game: game['date'], reverse=True)
@@ -148,6 +143,7 @@ class GameHandler(webapp2.RequestHandler):
         except (ValueError):
             real_date = datetime.datetime.strptime(date,'%Y-%m-%d')
         param_map['date'] = real_date
+        param_map['created_at'] = datetime.datetime.now()
         logging.error(param_map)
         game = Game(**param_map)
         game.put()
