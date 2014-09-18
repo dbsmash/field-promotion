@@ -12,7 +12,9 @@ var GameService = function($http) {
 			url: '/game/',
 			data: $.param(gameParams),
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-		}).success(function(key) { gameParams.key = key });
+		})
+			.success(function(key) { gameParams.key = key })
+			.error(function() { alert('An error occured when trying to save the game.') });
 	};
 
 	var deleteGame = function(game) {
@@ -43,7 +45,7 @@ var GameService = function($http) {
 		searchParams.location = search.location;
 		searchParams.size = search.size;
 		searchParams.opponent_name = search.opponent_name;
-		
+
 		$http.get('/game/', {params: searchParams}).success(function(data) {
 			$scope.games = data.games;
 			$scope.updatePerformance(data.win_count, data.non_teaching_count);
