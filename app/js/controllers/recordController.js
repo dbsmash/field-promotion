@@ -132,17 +132,18 @@ var RecordController = function($scope, GameService, FactionService) {
 	};
 
 	$scope.deleteGame = function(game) {
-		GameService.deleteGame(game);
-		var index = -1;
-		for (var i = 0; i < $scope.games.length; i++) {
-			if ($scope.games[i].key === game.key) {
-				index = i;
+		if(confirm('Are you sure you want to delete this game?')) {
+			GameService.deleteGame(game);
+			var index = -1;
+			for (var i = 0; i < $scope.games.length; i++) {
+				if ($scope.games[i].key === game.key) {
+					index = i;
+				}
+			}
+			if (index > -1) {
+				$scope.games.splice(index, 1);
 			}
 		}
-		if (index > -1) {
-			$scope.games.splice(index, 1);
-		}
-
 	};
 
 	$scope.getDesignationForLevel = function(level) {
