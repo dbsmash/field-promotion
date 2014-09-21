@@ -1,0 +1,11 @@
+application: field-promotion
+module: gostuff
+version: 12
+runtime: go
+api_version: go1
+
+handlers:
+
+- url: /.*
+  script: _go_app
+  login: required
