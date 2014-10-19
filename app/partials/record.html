@@ -79,6 +79,7 @@
       <th class="text-font">{{game.size}}</th>
       <th class="text-font" ng-class="{lost: isResultLoss(game.result), won: isResultWin(game.result)}">{{game.result}}</th>
       <th class="text-font" ng-if="game.key !== NEW"><button ng-click="deleteGame(game)">Delete</button></th>
+      <th class="text-font" ng-if="game.key === NEW">Saving…</th>
     </tr>
   </table>
 </div>

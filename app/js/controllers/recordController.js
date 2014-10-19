@@ -7,10 +7,9 @@ var RecordController = function($scope, GameService, FactionService) {
 			$scope.newGame.player_warcaster = FactionService.getCastersForFaction($scope.newGame.player_faction).filter(function(f) {
 				return f.name == mostRecentGame.player_warcaster
 			})[0];
-			$scope.newGame.size             = mostRecentGame.size;
-			$scope.newGame.date             = mostRecentGame.date;
-			$scope.newGame.game_type        = mostRecentGame.game_type;
-			$scope.newGame.location         = mostRecentGame.location;
+			$scope.newGame.size      = mostRecentGame.size;
+			$scope.newGame.game_type = mostRecentGame.game_type;
+			$scope.newGame.location  = mostRecentGame.location;
 		}
 		resetValues();
 	});
@@ -53,15 +52,15 @@ var RecordController = function($scope, GameService, FactionService) {
 		$scope.newGame = $scope.newGame || {
 			player_faction: $scope.playerFactions[0],
 			size: '',
-			date: new Date().toISOString().split('T')[0],
 			game_type: '',
 			location: ''
 		};
 
-		$scope.newGame.opponent_name = '';
-		$scope.newGame.result = $scope.results[0];
+		$scope.newGame.opponent_name	= '';
+		$scope.newGame.result			= $scope.results[0];
 		$scope.newGame.opponent_faction = $scope.playerFactions[0];
-		$scope.newGame.key = 'NEW';
+		$scope.newGame.key				= 'NEW';
+		$scope.newGame.date			= new Date().toISOString().split('T')[0],
 
 		$scope.playerCasters = FactionService.getCastersForFaction($scope.newGame.player_faction);
 		if($scope.playerCasters.indexOf($scope.newGame.player_warcaster) == -1)
@@ -133,17 +132,18 @@ var RecordController = function($scope, GameService, FactionService) {
 	};
 
 	$scope.deleteGame = function(game) {
-		GameService.deleteGame(game);
-		var index = -1;
-		for (var i = 0; i < $scope.games.length; i++) {
-			if ($scope.games[i].key === game.key) {
-				index = i;
+		if(confirm('Are you sure you want to delete this game?')) {
+			GameService.deleteGame(game);
+			var index = -1;
+			for (var i = 0; i < $scope.games.length; i++) {
+				if ($scope.games[i].key === game.key) {
+					index = i;
+				}
+			}
+			if (index > -1) {
+				$scope.games.splice(index, 1);
 			}
 		}
-		if (index > -1) {
-			$scope.games.splice(index, 1);
-		}
-
 	};
 
 	$scope.getDesignationForLevel = function(level) {
