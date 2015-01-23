@@ -12,6 +12,8 @@ import (
 	"appengine/user"
 )
 
+const layout = "2015-01-21"
+
 type Game struct {
 	Date              time.Time      `datastore:"date" json:"date"`
 	PlayerFaction     string         `datastore:"player_faction" json:"player_faction"`
@@ -48,6 +50,10 @@ type Response struct {
 	NtCount int    `json:"non_teaching_count"`
 }
 
+type KeyResp struct {
+	Key     *datastore.Key  `json:"key"`
+}
+
 func handleGet(writer http.ResponseWriter, request *http.Request, namespace appengine.Context) {
 	var games []Game
 	var wins = 0
@@ -55,8 +61,7 @@ func handleGet(writer http.ResponseWriter, request *http.Request, namespace appe
 
 	query := datastore.NewQuery("Game")
 	keys, _ := query.GetAll(namespace, &games)
-	sort.Sort(ByDate(games))
-
+	
 	for i, key := range keys {
 		games[i].Key = key
 		if games[i].Won {
@@ -67,6 +72,8 @@ func handleGet(writer http.ResponseWriter, request *http.Request, namespace appe
 			nts++
 		}
 	}
+
+	sort.Sort(ByDate(games))
 	
 	resp := Response{Games: games, Wins: wins, NtCount: nts}
 	response, _ := json.Marshal(resp)
@@ -81,8 +88,11 @@ func handlePost(writer http.ResponseWriter, request *http.Request, namespace app
 	    var newGame Game
 	    err1 := json.Unmarshal(p, &newGame)
 	    if err1 == nil {
-	        key := datastore.NewKey(namespace, "Game", "", 0, nil)
-			datastore.Put(namespace, key, &newGame)
+	        key := datastore.NewIncompleteKey(namespace, "Game", nil)
+			key, _ = datastore.Put(namespace, key, &newGame)
+			newGame.Key = key
+			response, _ := json.Marshal(newGame)
+			writer.Write(response)
 	    } else {
 	        namespace.Infof("Unable to unmarshall the JSON request", err1);
 	    }

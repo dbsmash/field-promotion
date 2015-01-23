@@ -1,26 +1,33 @@
 var GameService = function($http) {
 	var getGames = function($scope) {
-		return $http.get('/game/').success(function(data) {
+		return $http.get('/game_go/').success(function(data) {
+			for(var i = 0; i < data.games.length; i++) {
+				data.games[i].date = data.games[i].date.substring(0, 10);
+			}
 			$scope.games = data.games;
 			$scope.games.created_at = $scope.games.created_at && new Date($scope.games.created_at)
         });
 	};
 
 	var submitGame = function(gameParams) {
+		gameParams.date = gameParams.date + 'T00:00:00Z';
 		$http({
 			method: 'POST',
-			url: '/game/',
-			data: $.param(gameParams),
+			url: '/game_go/',
+			data: JSON.stringify(gameParams),
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		})
-			.success(function(key) { gameParams.key = key })
+			.success(function(resp) { 
+				gameParams.key = resp.key 
+				gameParams.date = gameParams.date.substring(0, 10);
+			})
 			.error(function() { alert('An error occured when trying to save the game.') });
 	};
 
 	var deleteGame = function(game) {
 		$http({
 			method: 'DELETE',
-			url: '/game/' + game.key
+			url: '/game_go/' + game.key
 		});
 	};
 
