@@ -1,4 +1,4 @@
-package fieldpromotion
+package goapp
 
 import (
 	"encoding/json"
@@ -81,6 +81,7 @@ func handleGet(writer http.ResponseWriter, request *http.Request, namespace appe
 }
 
 func handlePost(writer http.ResponseWriter, request *http.Request, namespace appengine.Context) {
+	namespace.Infof("handlePost");
 	p := make([]byte, request.ContentLength)    
 	_, err := request.Body.Read(p)
 

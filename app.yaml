@@ -1,31 +1,25 @@
 application: field-promotion
-version: 12
-runtime: python27
-threadsafe: true
-api_version: 1
+module: default
+version: react1
+runtime: go
+api_version: go1
 
 handlers:
 
-- url: /game.*
-  script: py.rest_handler.app
-  login: required
-
-- url: /stat.*
-  script: py.rest_handler.app
-  login: required
-
 - url: /img
-  static_dir: app/img
+  static_dir: dist/img
 
-- url: (.*)/
-  static_files: app\1/index.html
-  upload: app
+- url: /scripts
+  static_dir: dist/scripts
+
+- url: /styles
+  static_dir: dist/styles
+
+- url: /.*
+  script: _go_app
   login: required
 
-- url: (.*)
-  static_files: app\1
-  upload: app
-  login: required
-
-builtins:
-- remote_api: on
+skip_files:
+  - ^node_modules$
+  - ^app$
+  - ^app2$

@@ -1,6 +1,6 @@
 var GameService = function($http) {
 	var getGames = function($scope) {
-		return $http.get('/game_go/').success(function(data) {
+		return $http.get('/game/').success(function(data) {
 			for(var i = 0; i < data.games.length; i++) {
 				data.games[i].date = data.games[i].date.substring(0, 10);
 			}
@@ -10,16 +10,16 @@ var GameService = function($http) {
 	};
 
 	var submitGame = function(gameParams) {
-		gameParams.date = gameParams.date + 'T00:00:00Z';
+		//gameParams.date = gameParams.date + 'T00:00:00Z';
 		$http({
 			method: 'POST',
-			url: '/game_go/',
-			data: JSON.stringify(gameParams),
+			url: '/game/',
+			data: $.param(gameParams),
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 		})
 			.success(function(resp) { 
 				gameParams.key = resp.key 
-				gameParams.date = gameParams.date.substring(0, 10);
+				//gameParams.date = gameParams.date.substring(0, 10);
 			})
 			.error(function() { alert('An error occured when trying to save the game.') });
 	};
@@ -27,7 +27,7 @@ var GameService = function($http) {
 	var deleteGame = function(game) {
 		$http({
 			method: 'DELETE',
-			url: '/game_go/' + game.key
+			url: '/game/' + game.key
 		});
 	};
 

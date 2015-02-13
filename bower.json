@@ -1,0 +1,13 @@
+{
+  "name": "field-promotion",
+  "version": "3.0.0",
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "jquery-ui": "", 
+    "react": "^0.10.0",
+    "bootstrap-sass-official": "^3.1.1",
+    "modernizr": "^2.8.3",
+    "react-bootstrap": "0.12.0"
+  }
+}
+
