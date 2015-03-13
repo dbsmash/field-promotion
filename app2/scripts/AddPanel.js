@@ -90,6 +90,29 @@ var AddNewPanel = React.createClass({
         app.setState({date: this.value});
       }
     });
+
+    var date = new Date();
+    var dateString = date.toISOString().substring(0,10);
+    this.setState({date: dateString});
+    $('#date').val(dateString);
+
+    var cache = GameStore.getLastSavedGameStorage();
+    if (cache) {
+      $('#player_faction').val(cache.player_faction);
+      this.setState({player_faction: cache.player_faction});
+
+      $('#player_warcaster').val(cache.player_warcaster);
+      this.setState({player_warcaster: cache.player_warcaster});
+
+      $('#size').val(cache.size);
+      this.setState({size: cache.size});
+
+      $('#game_type').val(cache.game_type);
+      this.setState({game_type: cache.game_type});
+
+      $('#location').val(cache.location);
+      this.setState({location: cache.location});
+    }
   },
 
   onFactionChanged: function(event) {

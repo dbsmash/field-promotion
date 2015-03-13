@@ -24,12 +24,38 @@ var GameStore = {
     }
   },
 
+  updateLastSavedGameStorage: function(game) {
+    if (typeof(Storage) != 'undefined') {
+      localStorage.setItem('player_faction', game.player_faction);
+      localStorage.setItem('player_warcaster', game.player_warcaster);
+      localStorage.setItem('size', game.size);
+      localStorage.setItem('location', game.location);
+      localStorage.setItem('game_type', game.game_type);
+    }
+  },
+
+  getLastSavedGameStorage: function() {
+    if (typeof(Storage) != 'undefined') {
+      if (!localStorage.player_faction) {
+        return;
+      }
+      var data = {};
+      data.player_faction = localStorage.player_faction;
+      data.size = localStorage.size;
+      data.location = localStorage.location;
+      data.game_type = localStorage.game_type;
+      data.player_warcaster = localStorage.player_warcaster;
+      return data;
+    }
+  },
+
   add: function (game) {
     $.ajax({url: '/game_go/',
       type: 'POST',
       dataType: 'json',
       data: JSON.stringify(game),
       success: function (data) {
+        this.updateLastSavedGameStorage(game);
         this.games.unshift(data);
         this.notifyConsumers('add', data);
       }.bind(this),
