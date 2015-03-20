@@ -65,6 +65,31 @@ var GameStore = {
     });
   },
 
+  delete: function (key) {
+    $.ajax({url: '/game_go/' + key,
+      type: 'DELETE',
+      success: function (data) {
+        this._deleteLocal(key);
+        this.notifyConsumers('delete', this.games);
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error('Error deleting game from server!');
+      }.bind(this)
+    });
+  },
+
+  _deleteLocal: function(key) {
+    var index = -1;
+      for (var i = 0; i < this.games.length; i++) {
+        if (this.games[i].key === key) {
+          index = i;
+        }
+      }
+      if (index > -1) {
+        this.games.splice(index, 1);
+      }
+  },
+
   load: function () {
     $.ajax({url: '/game_go/',
       type: 'GET',
