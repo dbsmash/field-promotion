@@ -10,11 +10,11 @@ var $ = require('gulp-load-plugins')();
 
 // Styles
 gulp.task('styles', function () {
-    return gulp.src('app2/styles/*.*')
+    return gulp.src('app/styles/*.*')
         .pipe($.rubySass({
             style: 'expanded',
             precision: 10,
-            loadPath: ['app2/bower_components']
+            loadPath: ['./bower_components']
         }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('dist/styles'))
@@ -24,13 +24,13 @@ gulp.task('styles', function () {
 
 // images
 gulp.task('images', function () {
-    return gulp.src('app2/images/*.*')
+    return gulp.src('app/images/*.*')
         .pipe(gulp.dest('dist/images'));
 });
 
 // Scripts
 gulp.task('scripts', function() {
-    browserify(['./app2/scripts/app.js'])
+    browserify(['./app/scripts/app.js'])
     .transform(reactify)
     .bundle()
     .pipe(source('app.js'))
@@ -39,7 +39,7 @@ gulp.task('scripts', function() {
 
 // HTML
 gulp.task('html', function () {
-    return gulp.src('app2/*.html')
+    return gulp.src('app/*.html')
         .pipe($.useref())
         .pipe(gulp.dest('dist'))
         .pipe($.size())
@@ -53,7 +53,7 @@ gulp.task('clean', function () {
 
 // Bundle
 gulp.task('bundle', ['styles', 'scripts', 'images', 'bower'], function(){
-    return gulp.src('./app2/*.html')
+    return gulp.src('./app/*.html')
                .pipe($.useref.assets())
                .pipe($.useref.restore())
                .pipe($.useref())

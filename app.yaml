@@ -22,4 +22,3 @@ handlers:
 skip_files:
   - ^node_modules$
   - ^app$
-  - ^app2$
