@@ -1,6 +1,6 @@
 application: field-promotion
 module: default
-version: react1
+version: react2
 runtime: go
 api_version: go1
 

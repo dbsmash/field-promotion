@@ -100,6 +100,28 @@ func handlePost(writer http.ResponseWriter, request *http.Request, namespace app
 	}
 }
 
+func handlePut(writer http.ResponseWriter, request *http.Request, namespace appengine.Context) {
+	namespace.Infof("handlePut");
+	p := make([]byte, request.ContentLength)    
+	_, err := request.Body.Read(p)
+
+	if err == nil {
+	    var newGame Game
+	    err1 := json.Unmarshal(p, &newGame)
+	    if err1 == nil {
+	    	_, err3 := datastore.Put(namespace, newGame.Key, &newGame)
+	        if err3 != nil {
+	        	namespace.Infof("Failed to PUT updated entity", err3);
+	        } else {
+	        	response, _ := json.Marshal(newGame)
+				writer.Write(response)
+	        }
+	    } else {
+	        namespace.Infof("Unable to unmarshall the JSON request", err1);
+	    }
+	}
+}
+
 func handleDelete(writer http.ResponseWriter, request *http.Request, namespace appengine.Context) {
 	keyName := request.URL.Path
 	i := strings.Index(keyName, "/")
@@ -127,7 +149,9 @@ func handleRequest(writer http.ResponseWriter, request *http.Request) {
         handleGet(writer, request, namespaceContext)
     } else if request.Method == "POST" {
         handlePost(writer, request, namespaceContext)
-    } else if request.Method == "DELETE" {
+    } else if request.Method == "PUT" {
+        handlePut(writer, request, namespaceContext)
+    }else if request.Method == "DELETE" {
         handleDelete(writer, request, namespaceContext)
     }else {
         http.Error(writer, "Invalid request method.", 405)
