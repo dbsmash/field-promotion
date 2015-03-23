@@ -10,8 +10,29 @@ var Input = require('react-bootstrap').Input;
 var AlertService = require('./AlertService');
 
 var AddNewPanel = React.createClass({
+
   getInitialState: function () {
+    if (this.props.game) {
+      // panel is editing an existing game
+      return {
+        editing: true,
+        opponent_faction: this.props.game.opponent_faction,
+        date: this.props.game.date,
+        player_faction: this.props.game.player_faction,
+        player_warcaster: this.props.game.player_warcaster,
+        opponent_name: this.props.game.opponent_name,
+        opponent_warcaster: this.props.game.opponent_warcaster,
+        size: this.props.game.size,
+        won: this.props.game.won,
+        draw: this.props.game.draw,
+        teaching: this.props.game.teaching,
+        location: this.props.game.location,
+        game_type: this.props.game.game_type,
+        result: this.props.game.result
+      };
+    }
     return {
+      editing: false,
       opponent_faction: 'Khador',
       date: '',
       player_faction: 'Khador',
@@ -62,7 +83,12 @@ var AddNewPanel = React.createClass({
       newGame.draw = result.draw;
       newGame.teaching = result.teaching;
 
-      GameStore.add(newGame);
+      if (this.state.editing) {
+        newGame.key = this.props.game.key;
+        GameStore.update(newGame);
+      } else {
+        GameStore.add(newGame);
+      }
     } else {
       AlertService.showAlert('danger', error);
     }
@@ -96,22 +122,38 @@ var AddNewPanel = React.createClass({
     this.setState({date: dateString});
     $('#date').val(dateString);
 
-    var cache = GameStore.getLastSavedGameStorage();
-    if (cache) {
-      $('#player_faction').val(cache.player_faction);
-      this.setState({player_faction: cache.player_faction});
 
-      $('#player_warcaster').val(cache.player_warcaster);
-      this.setState({player_warcaster: cache.player_warcaster});
+    if (this.props.game) {
+      // editing existing game, so populate components accordingly!
+      $('#player_faction').val(this.props.game.player_faction);
+      $('#size').val(this.props.game.size);
+      $('#game_type').val(this.props.game.game_type);
+      $('#location').val(this.props.game.location);
+      $('#date').val(this.props.game.date);
+      $('#opponent_faction').val(this.props.game.opponent_faction);
+      $('#opponent_warcaster').val(this.props.game.opponent_warcaster);
+      $('#result').val(this.props.game.result);
+      $('#opponent_name').val(this.props.game.opponent_name);
+      $('#player_warcaster').val(this.props.game.player_warcaster);
+    } else {
+      var cache = GameStore.getLastSavedGameStorage();
+    
+      if (cache && !this.props.game) {
+        $('#player_faction').val(cache.player_faction);
+        this.setState({player_faction: cache.player_faction});
 
-      $('#size').val(cache.size);
-      this.setState({size: cache.size});
+        $('#player_warcaster').val(cache.player_warcaster);
+        this.setState({player_warcaster: cache.player_warcaster});
 
-      $('#game_type').val(cache.game_type);
-      this.setState({game_type: cache.game_type});
+        $('#size').val(cache.size);
+        this.setState({size: cache.size});
 
-      $('#location').val(cache.location);
-      this.setState({location: cache.location});
+        $('#game_type').val(cache.game_type);
+        this.setState({game_type: cache.game_type});
+
+        $('#location').val(cache.location);
+        this.setState({location: cache.location});
+      }
     }
   },
 
@@ -196,8 +238,22 @@ var AddNewPanel = React.createClass({
       );
     }.bind(this));
 
+    var actionButton;
+    var clearButton;
+    var header;
+    var key;
+    if (this.state.editing) {
+      actionButton = <Button bsStyle='primary' onClick={this.onSave}>Save Changes</Button>;
+      header = 'Edit Game';
+      key = this.props.game.key;
+    } else {
+      actionButton = <Button bsStyle='primary' onClick={this.onSave}>Add</Button>;
+      clearButton = <Button bsStyle='primary' onClick={this.onReset}>Reset</Button>;
+      header = 'Add New Game';
+      key = 'new';
+    }
     return (
-        <Panel header='Add New Game...' key='new'>
+        <Panel header={header} key={key}>
           <form>
           <Table>
             <tbody>
@@ -246,8 +302,8 @@ var AddNewPanel = React.createClass({
           </Table>
           </form>
           <ButtonToolbar>
-            <Button bsStyle='primary' onClick={this.onSave}>Save</Button>
-            <Button bsStyle='primary' onClick={this.onReset}>Reset</Button>
+            {actionButton}
+            {clearButton}
           </ButtonToolbar>
           </Panel>
     );

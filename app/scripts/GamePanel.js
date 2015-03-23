@@ -10,8 +10,19 @@ var Table = require('react-bootstrap').Table;
 var ButtonToolbar = require('react-bootstrap').ButtonToolbar;
 var Input = require('react-bootstrap').Input;
 var AlertService = require('./AlertService');
+var AddPanel = require('./AddPanel');
 
 var GameDetailModel = React.createClass({
+
+  getInitialState: function() {
+    return {
+      editing: false
+    };
+  },
+
+  enableEditing: function() {
+    this.setState({editing: true});
+  },
 
   onDelete: function() {
     GameStore.delete(this.props.game.key);
@@ -19,6 +30,36 @@ var GameDetailModel = React.createClass({
   },
 
   render: function() {
+    if (this.state.editing) {
+      return this.getEditingRender();
+    } else {
+      return this.getDisplayRender();
+    }
+  },
+
+  componentWillMount: function() {
+    var app = this;
+    // make sure to hide popup if game is edited.
+    GameStore.addConsumer('edit', function () {
+      app.setState({editing: false});
+    });
+  },
+
+  getEditingRender: function() {
+    var game = this.props.game;
+    return (
+      <Modal bsStyle="primary" title="Game Details" animation={false}>
+        <div className="modal-body">
+          <AddPanel game={game}/>
+        </div>
+        <div className="modal-footer">
+          <Button bsStyle="primary" onClick={this.props.onRequestHide}>Close</Button>
+        </div>
+      </Modal>
+    );
+  },
+
+  getDisplayRender: function () {
     var game = this.props.game;
     return (
       <Modal bsStyle="primary" title="Game Details" animation={false}>
@@ -38,6 +79,7 @@ var GameDetailModel = React.createClass({
         </div>
         <div className="modal-footer">
           <Button bsStyle="danger" onClick={this.onDelete}>Delete Game</Button>
+          <Button bsStyle="primary" onClick={this.enableEditing}>Edit Game</Button>
           <Button bsStyle="primary" onClick={this.props.onRequestHide}>Close</Button>
         </div>
       </Modal>

@@ -21,6 +21,10 @@ var GamesPanel = React.createClass({
     GameStore.setConsumer('delete', function(games) {
       app.setState({games: games});
     });
+
+    GameStore.setConsumer('edit', function(games) {
+      app.setState({games: games});
+    });
     return {games: []};
   },
 

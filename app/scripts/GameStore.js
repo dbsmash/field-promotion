@@ -20,7 +20,11 @@ var GameStore = {
   notifyConsumers: function (type, data) {
     var relevantCallbacks = this.callbacks[type];
     for (var i = 0; i < relevantCallbacks.length; i++) {
-      relevantCallbacks[i](data);
+      try {
+        relevantCallbacks[i](data);
+      } catch(err) {
+        
+      }
     }
   },
 
@@ -65,6 +69,22 @@ var GameStore = {
     });
   },
 
+  update: function(game) {
+    $.ajax({url: '/game_go/',
+      type: 'PUT',
+      dataType: 'json',
+      data: JSON.stringify(game),
+      success: function (data) {
+        data.date = data.date.substring(0, 10);
+        this._updateLocal(data);
+        this.notifyConsumers('edit', this.games);
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error('Error updating game on server!');
+      }.bind(this)
+    });
+  },
+
   delete: function (key) {
     $.ajax({url: '/game_go/' + key,
       type: 'DELETE',
@@ -76,6 +96,18 @@ var GameStore = {
         console.error('Error deleting game from server!');
       }.bind(this)
     });
+  },
+
+  _updateLocal: function(game) {
+    var index = -1;
+      for (var i = 0; i < this.games.length; i++) {
+        if (this.games[i].key === game.key) {
+          index = i;
+        }
+      }
+      if (index > -1) {
+        this.games[index] = game;
+      }
   },
 
   _deleteLocal: function(key) {
