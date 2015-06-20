@@ -71,6 +71,7 @@ var factionData = {
     {name:"Kommander Zoktavir, The Butcher Unleashed", level: 3},
     {name:"Kommander Sorscha Kratikoff", level: 1},
     {name:"Forward Kommander Sorscha Kratikoff", level: 2},
+    {name:"Forward Kommander Sorscha Kratikoff", level: 2},
     {name:"Vladimir Tzepesci, The Dark Prince", level: 1},
     {name:"Vladimir Tzepesci, The Dark Champion", level: 2},
     {name:"Vladimir Tzepesci, Great Prince of Umbrey", level: 3},
@@ -90,6 +91,7 @@ var factionData = {
     {name:"Captain E. Dominic Darius", level: 1},
     {name:"Captain Victoria Haley", level: 1},
     {name:"Major Victoria Haley", level: 2},
+    {name:"Major Prime Victoria Haley", level: 3},
     {name:"Captain Jeremiah Kraye", level: 1},
     {name:"Commander Adept Sebastian Nemo", level: 1},
     {name:"General Adept Sebastian Nemo", level: 2},
@@ -101,6 +103,7 @@ var factionData = {
     {name:"Commander Dalin Sturgis", level: 1}
 ],
 "Protectorate of Menoth":[
+    {name:"Anson Durst, Rock of the Faith", level: 1},
     {name:"Grand Scrutator Severius", level: 1},
     {name:"Hierarch Severius", level: 2},
     {name:"Harbinger of Menoth", level: 1},
@@ -124,8 +127,9 @@ var factionData = {
     {name:"Adeptis Rahn", level: 1},
     {name:"Ravyn, Eternal Light", level: 1},
     {name:"Dawnlord Vyros", level: 1},
+    {name:"Vyros, Incissar of the Dawnguard", level: 2},
     {name:"Issyria, Sibyl of Dawn", level: 1},
-    {name:"Vyros, Incissar of the Dawnguard", level: 2}
+    {name:"Thyron the Sword of Truth", level: 1}
 ],
 "Cryx":[
     {name:"Iron Lich Asphyxious", level: 1},
@@ -133,6 +137,7 @@ var factionData = {
     {name:"Asphyxious the Hellbringer", level: 3},
     {name:"War Witch Deneghra", level: 1},
     {name:"Wraith Witch Deneghra", level: 2},
+    {name:"Deneghra the Soul Weaver", level: 3},
     {name:"Goreshade the Bastard", level: 1},
     {name:"Goreshade the Cursed", level: 2},
     {name:"Goreshade, Lord of Ruin", level: 3},
@@ -158,6 +163,7 @@ var factionData = {
     {name:"Captain Phinneus Shae", level: 1},
     {name:"Ashlynn D'Elyse", level: 1},
     {name:"Exulon Thexus", level: 1},
+    {name:"Cognifex Cyphon", level: 1},
     {name:"Constance Blaize, Knight of the Prophet", level: 1}
 ],
 "Legion of Everblight": [
@@ -170,6 +176,7 @@ var factionData = {
     {name:"Lylyth, Reckoning of Everblight", level: 3},
     {name:"Rhyas, Sigil of Everblight", level: 1},
     {name:"Saeryn, Omen of Everblight", level: 1},
+    {name:"Saeryn and Rhyas, Talons of Everblight", level: 1},
     {name:"Thagrosh, Prophet of Everblight", level: 1},
     {name:"Thagrosh, Messiah of Everblight", level: 2},
     {name:"Vayl, Disciple of Everblight", level: 1},
@@ -188,7 +195,8 @@ var factionData = {
     {name:"Dominar Rasheth", level: 1},
     {name:"Tyrant Xerxis", level: 1},
     {name:"Xerxis, Fury of Halaak", level: 2},
-    {name:"Supreme Aptimus Zaal & Kovaas", level: 1}
+    {name:"Supreme Aptimus Zaal & Kovaas", level: 1},
+    {name:"Zaal, the Ancestral Advocate", level: 2}
 ],
 "Circle Orboros": [
     {name:"Baldur the Stonecleaver", level: 1},
@@ -199,6 +207,7 @@ var factionData = {
     {name:"Kaya the Wildborne", level: 1},
     {name:"Kaya the Moonhunter", level: 2},
     {name:"Kromac the Ravenous", level: 1},
+    {name:"Kromac, Champion of the Wurm", level: 2},
     {name:"Krueger the Stormwrath", level: 1},
     {name:"Krueger the Stormlord", level: 2},
     {name:"Mohsar the Desertwalker", level: 1},
