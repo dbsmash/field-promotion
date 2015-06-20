@@ -1,4 +1,4 @@
 dispatch:
-  # Default module serves the typical web resources and all static resources.
+  # Default 
   - url: "*/game_go*"
-    module: gostuff
+    module: default
